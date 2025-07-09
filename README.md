@@ -1,10 +1,10 @@
 ### Running
 ```bash
-cd pastebin
+cd Pastebin_go
 ```
 
 ```bash
-docker run redis
+docker run redis:latest
 ```
 
 ```bash
