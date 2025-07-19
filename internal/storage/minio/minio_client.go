@@ -10,30 +10,23 @@ import (
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )
 
-// Client интерфейс для взаимодействия с Minio
 type Client interface {
-	InitMinio() error                                                                 // Метод для инициализации подключения к Minio
-	CreateOne(file utils.FileDataType, expires time.Duration) (string, string, error) // Метод для создания одного объекта в бакете Minio
-	GetOne(fileName string, date time.Time) (string, error)                           // Метод для получения одного объекта из бакета Minio                             // Метод для удаления одного объекта из бакета Minio
+	InitMinio() error
+	CreateOne(file utils.FileDataType, expires time.Duration) (string, string, error)
+	GetOne(fileName string, date time.Time) (string, error)
 }
 
-// minioClient реализация интерфейса MinioClient
 type minioClient struct {
-	mc *minio.Client // Клиент Minio
+	mc *minio.Client
 }
 
-// NewMinioClient создает новый экземпляр Minio Client
 func NewMinioClient() Client {
-	return &minioClient{} // Возвращает новый экземпляр minioClient с указанным именем бакета
+	return &minioClient{}
 }
 
-// InitMinio подключается к Minio и создает бакет, если не существует
-// Бакет - это контейнер для хранения объектов в Minio. Он представляет собой пространство имен, в котором можно хранить и организовывать файлы и папки.
 func (m *minioClient) InitMinio() error {
-	// Создание контекста с возможностью отмены операции
 	ctx := context.Background()
 
-	// Подключение к Minio с использованием имени пользователя и пароля
 	client, err := minio.New(config.CfgMinio.MinioEndpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(config.CfgMinio.MinioRootUser, config.CfgMinio.MinioRootPassword, ""),
 		Secure: config.CfgMinio.MinioUseSSL,
@@ -42,10 +35,8 @@ func (m *minioClient) InitMinio() error {
 		return err
 	}
 
-	// Установка подключения Minio
 	m.mc = client
 
-	// Проверка наличия бакета и его создание, если не существует
 	exists, err := m.mc.BucketExists(ctx, config.CfgMinio.BucketName)
 	if err != nil {
 		return err

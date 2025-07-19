@@ -15,9 +15,7 @@ type OperationError struct {
 	Error    error
 }
 
-// Вытаскиваем имя файла из URL
 func ExtractFilenameFromURL(url string) string {
-	// Можно использовать стандартную библиотеку или просто взять последний сегмент URL
 	lastSlash := -1
 	for i := len(url) - 1; i >= 0; i-- {
 		if url[i] == '/' {
@@ -27,7 +25,6 @@ func ExtractFilenameFromURL(url string) string {
 	}
 	filename := url[lastSlash+1:]
 
-	// Можно дополнительно очистить имя файла или оставить как есть
 	return filename
 }
 

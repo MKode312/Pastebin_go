@@ -35,9 +35,6 @@ func main() {
 
 	log := setupLogger(cfg.Env)
 
-	log.Info("starting pastebin", slog.String("env", cfg.Env))
-	log.Debug("debug messages are enabled")
-	log.Error("error messages are enabled")
 
 	redisClient, err := redis.NewClientForCache(ctx)
 	if err != nil {

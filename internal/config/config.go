@@ -20,12 +20,12 @@ type Config struct {
 }
 
 type MinioConfig struct {
-	MinioPort         string // Порт, на котором запускается сервер
-	MinioEndpoint     string // Адрес конечной точки Minio
-	BucketName        string // Название конкретного бакета в Minio
-	MinioRootUser     string // Имя пользователя для доступа к Minio
-	MinioRootPassword string // Пароль для доступа к Minio
-	MinioUseSSL       bool   // Переменная, отвечающая за
+	MinioPort         string
+	MinioEndpoint     string
+	BucketName        string
+	MinioRootUser     string
+	MinioRootPassword string
+	MinioUseSSL       bool
 }
 
 type RedisConfig struct {
@@ -52,7 +52,7 @@ func MustLoad() *Config {
 		log.Fatalf("config file does not exist: %s", configPath)
 	}
 
-	err := godotenv.Load(".env")
+	err := godotenv.Load("config.env")
 	if err != nil {
 		log.Fatal("cannot read file: %w", err)
 	}
