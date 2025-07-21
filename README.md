@@ -55,7 +55,7 @@ go run cmd/minio/main.go
 ```bash
 go run cmd/pastebin/main.go
 ```
-### Using
+### Using the system
 1. To create a profile, you need to send a POST request to this URL: [http://localhost:8082/pastebin/register](http://localhost:8082/pastebin/register)
 
 Example request:
@@ -85,15 +85,16 @@ Example request:
 </p>
 
 ## Usage
-The [Usage](#usage) section would explain in more detail how to run the software, what kind of output or behavior to expect, and so on. It would cover basic operations as well as more advanced uses.
+Now, more about the API and it's functionality. All the links that are created are pretty short and unique, so you will never get the same URLs for different textblocks.
 
-Some of the information in this section will repeat what is in the [Quick start](#quick-start) section. This repetition is unavoidable, but also, not entirely undesirable: the more detailed explanations in this [Usage](#usage) section can help provide more context as well as clarify possible ambiguities that may exist in the more concise [Quick start](#quick-start) section.
+When you login, you are given the JWT authorization token. It is automatically saved in the cookie called "auth_token", since there is a middleware, that checks your token every single time you try to save the textblock or get it. The JWT token expires after 20 minutes, so you will need to login again to get a new one.
 
-If your software is complex and has many features, it may be better to create a dedicated website for your documentation (e.g., in [GitHub Pages](https://pages.github.com), [Read the Docs](https://about.readthedocs.com), or similar) rather than to cram everything into a single linear README file. In that case, the [Usage](#usage) section can be shortened to just a sentence or two pointing people to your documentation site.
+Also, when you are writing your text, you can set the expiration time for your textblock and the link for it. Just use the field in the JSON POST request body called "ExpiresAfter(mins)". Basically, the minimum expiration time is 1 minute.
 
-
-### More options
-Some projects need to communicate additional information to users and can benefit from additional sections in the README file. It's difficult to give specific instructions here – a lot depends on your software, your intended audience, etc. Use your judgment and ask for feedback from users or colleagues to help figure out what else is worth explaining.
 
 ## Known issues and limitations
-In this section, summarize any notable issues and/or limitations of your software. If none are known yet, this section can be omitted (and don't forget to remove the corresponding entry in the [Table of Contents](#table-of-contents) too); alternatively, you can leave this section in place and write something along the lines of "none are known at this time".
+There are several errors you can encounter. For instance, you obviously cannot login into account, which isn't created. Or if you try to get a textblock, which is expired, you get the error. Check the time you have set as the expiration time. 
+
+Speaking of the Redis cache, it has the limitation for 100mb, so you cannot save a textblock with size, which is greater than 100mb.
+
+If you encounter some unknown issues, please write about them in "Issues" in my GitHub repository.
