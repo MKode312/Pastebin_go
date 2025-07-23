@@ -36,6 +36,11 @@ To start the system, use the following commands:
 cd Pastebin_go
 ```
 
+* Install all missing dependencies if there are some:
+```bash
+go mod tidy
+```
+
 * Run the redis-cache docker-container:
 ```bash
 docker run --name redis-server -p 6379:6379 redis:latest
